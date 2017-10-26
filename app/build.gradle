@@ -1,0 +1,63 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.bugtags.library.plugin'
+
+bugtags {
+    //自动上传符号表功能配置，如果需要根据 build varint 配置，请参考帮助中心->符号表->Android 符号表->配置自动上传符号表
+    appKey "205b38ba2e7e01f55a441bba38cb411d"  // appKey
+    appSecret "APP_SECRET"    //appSecret，管理员在设置页可以查看
+    mappingUploadEnabled true
+    trackingNetworkEnabled true//网络跟踪功能配置(企业版)
+}
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+    defaultConfig {
+        applicationId "com.example.vpubao.baseandroidframework"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main() {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:multidex:1.0.1'
+    compile 'com.bugtags.library:bugtags-lib:latest.integration'
+    compile 'com.android.support:percent:26.0.0-alpha1'
+    compile rootProject.ext.supportDependencies.v7
+    compile rootProject.ext.supportDependencies.glide
+    compile rootProject.ext.supportDependencies.rxJava
+    compile rootProject.ext.supportDependencies.rxAndroid
+    compile rootProject.ext.supportDependencies.retrifit
+    compile rootProject.ext.supportDependencies.retrofitGsonCoverter
+    compile rootProject.ext.supportDependencies.retrofitStringCoverter
+    compile rootProject.ext.supportDependencies.retrofitRxjavaAdapter
+    compile rootProject.ext.supportDependencies.okHttp
+    compile rootProject.ext.supportDependencies.okIo
+    compile rootProject.ext.supportDependencies.rxLifeCycle
+    compile rootProject.ext.supportDependencies.rxLifeCycleComponents
+    compile rootProject.ext.supportDependencies.butterKnife
+    annotationProcessor rootProject.ext.supportDependencies.butterKnifeCompiler
+    annotationProcessor rootProject.ext.supportDependencies.toasty
+    implementation files('libs/jcore-android-1.1.5.jar')
+    implementation files('libs/jpush-android-3.0.7.jar')
+}
